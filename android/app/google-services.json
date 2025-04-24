@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739970426614",
+    "project_id": "ninetonine-489a5",
+    "storage_bucket": "ninetonine-489a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739970426614:android:a7ee05c8ad865f04ab6ed7",
+        "android_client_info": {
+          "package_name": "com.ninetonineschool"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB2r63u3lmeFCm8uCb0RaBrL-7_hEw3ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

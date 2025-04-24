@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,56 +16,39 @@ import * as Animatable from 'react-native-animatable';
 import {useToast} from '../service/ToastProvider';
 import {OtpInput} from 'react-native-otp-entry';
 import COLORS from '../constants/color';
-
-// Create an animated TextInput component so we can call focus() on it.
-const AnimatableTextInput = Animatable.createAnimatableComponent(
-  // Using TextInput directly allows us to get the native focus() method.
-  require('react-native').TextInput,
-);
+import {useRoute} from '@react-navigation/native';
 
 const OtpScreen = ({navigation}) => {
   const [otp, setOtp] = useState('');
-  const otpInputs = useRef([]);
+  const route = useRoute();
+  const confirmation = route.params?.confirmation;
   const {showToast} = useToast();
 
-  const handleOtpChange = (value, index) => {
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+  const confirmCode = async () => {
+    try {
+      if (!confirmation) {
+        showToast('Confirmation object is missing', 'error');
+        return;
+      }
 
-    if (value && index < otp.length - 1) {
-      // Now focus the next TextInput (AnimatableTextInput supports focus)
-      otpInputs.current[index + 1]?.getNode().focus();
-    }
-
-    if (index === otp.length - 1 && value) {
-      setTimeout(handleVerify, 200);
-    }
-  };
-
-  const handleKeyPress = (e, index) => {
-    if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
-      otpInputs.current[index - 1]?.getNode().focus();
+      await confirmation.confirm(otp);
+      showToast('OTP Verified Successfully!', 'success');
+      navigation.navigate('Homepage');
+    } catch (error) {
+      console.log('OTP confirmation error:', error);
+      showToast('Invalid OTP. Please try again.', 'error');
     }
   };
 
   const handleVerify = () => {
-    console.log('Entered OTP:', otp);
-    if (otp.length === 4) {
-      if (otp === '4321') {
-        showToast('OTP Verified Successfully!', 'success');
-        navigation.navigate('Homepage');
-      } else {
-        showToast('Invalid OTP. Please try again.', 'error');
-      }
+    if (otp.length === 6) {
+      confirmCode();
     } else {
-      showToast('Please enter a complete 4-digit OTP', 'error');
+      showToast('Please enter a complete 6-digit OTP', 'error');
     }
   };
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
+  const dismissKeyboard = () => Keyboard.dismiss();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,7 +64,6 @@ const OtpScreen = ({navigation}) => {
               animation="fadeInDown"
               style={styles.imageContainer}>
               <Animatable.Image
-                // Ensure AssetsStock.Otp_screen refers to a correct image asset (e.g., a require statement)
                 source={AssetsStock.Otp_screen}
                 style={styles.image}
                 resizeMode="contain"
@@ -95,13 +77,13 @@ const OtpScreen = ({navigation}) => {
               <Text style={styles.subtitle}>
                 We have sent an OTP to your mobile. Please fill it in here.
               </Text>
+              <Text style={styles.testingOtpText}>[ Test OTP: 123456 ]</Text>
             </Animatable.View>
 
             <View style={styles.otpContainer}>
               <OtpInput
-                numberOfDigits={4}
+                numberOfDigits={6}
                 focusColor={COLORS.primary}
-                // placeholderText={'-'}
                 autoFocus={false}
                 hideStick={true}
                 blurOnFilled={true}
@@ -110,7 +92,7 @@ const OtpScreen = ({navigation}) => {
                 onTextChange={text => setOtp(text)}
                 onFilled={text => {
                   setOtp(text);
-                  console.log(`OTP is ${text}`);
+                  console.log(`OTP entered: ${text}`);
                 }}
                 textInputProps={{
                   accessibilityLabel: 'One-Time Password',
@@ -121,7 +103,7 @@ const OtpScreen = ({navigation}) => {
                   allowFontScaling: false,
                 }}
                 theme={{
-                  containerStyle: styles.container,
+                  containerStyle: styles.otpInputWrapper,
                   pinCodeContainerStyle: styles.pinCodeContainer,
                   pinCodeTextStyle: styles.pinCodeText,
                   focusStickStyle: styles.focusStick,
@@ -138,19 +120,19 @@ const OtpScreen = ({navigation}) => {
               <Text style={styles.resendText}>Didn't Receive OTP? </Text>
               <TouchableOpacity
                 onPress={() => {
-                  /* Resend logic here */
+                  /* resend logic */
                 }}>
                 <Text style={styles.resendLink}>Resend OTP</Text>
               </TouchableOpacity>
             </View>
 
-            <View style={styles.verifyButton}>
+            <View style={styles.verifyButtonContainer}>
               <TouchableOpacity
                 onPress={handleVerify}
-                disabled={otp.length !== 4}
+                disabled={otp.length !== 6}
                 style={[
                   styles.verifyButton,
-                  {opacity: otp.length === 4 ? 1 : 0.5},
+                  {opacity: otp.length === 6 ? 1 : 0.5},
                 ]}>
                 <Text style={styles.verifyButtonText}>Verify</Text>
               </TouchableOpacity>
@@ -171,48 +153,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 30,
     justifyContent: 'space-around',
   },
-  pinCodeContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc', // gray border when empty
-    backgroundColor: '#fff', // white background when empty
-    borderRadius: 10,
-    width: 55,
-    height: 55,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-  },
-
-  filledPinCodeContainer: {
-    backgroundColor: '#FDF8C4',
-    borderColor: '#8A40DD',
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-
-  activePinCodeContainer: {
-    backgroundColor: '#FDF8C4', // light green
-    borderColor: COLORS.primary, // success green
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-
-  pinCodeText: {
-    color: '#8A40DD',
-    fontSize: 20,
-    fontWeight: '600',
-    fontFamily: 'Poppins-Regular',
-    textAlign: 'center',
-  },
-
   imageContainer: {alignItems: 'center', marginVertical: 20},
-  image: {height: 283},
+  image: {height: 260},
   textContainer: {
     alignItems: 'center',
-    marginBottom: 20,
     paddingHorizontal: 10,
   },
   title: {
@@ -228,36 +175,50 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontFamily: 'Poppins-Regular',
   },
+  testingOtpText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 5,
+    fontFamily: 'Poppins-Regular',
+  },
   otpContainer: {
+    marginVertical: 20,
+    width: '100%',
+    alignItems: 'center',
+  },
+  otpInputWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '80%',
-    marginVertical: 20,
+    width: '90%',
   },
-  otpBoxWrapper: {
+  pinCodeContainer: {
     borderWidth: 1,
     borderColor: '#ccc',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    backgroundColor: '#fdf1ff',
+    width: 50,
+    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 50,
-    height: 50,
   },
-  otpBox: {
-    fontSize: 18,
-    color: '#8A4ODD',
-    textAlign: 'center',
-    padding: 10,
-    width: '100%',
-    height: '100%',
-    // Ensure a transparent background if desired
-    backgroundColor: 'transparent',
+  filledPinCodeContainer: {
+    backgroundColor: '#FDF8C4',
+    borderColor: '#8A40DD',
+  },
+  activePinCodeContainer: {
+    backgroundColor: '#FDF8C4',
+    borderColor: COLORS.primary,
+  },
+  pinCodeText: {
+    color: '#8A40DD',
+    fontSize: 20,
+    fontWeight: '600',
+    fontFamily: 'Poppins-Regular',
   },
   resendContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   resendText: {color: '#696969', fontFamily: 'Poppins-Regular'},
   resendLink: {
@@ -265,19 +226,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: 'Poppins-Regular',
   },
+  verifyButtonContainer: {
+    width: '90%',
+    marginTop: 10,
+  },
   verifyButton: {
     backgroundColor: '#571D99',
-    width: '80%',
     height: 50,
     borderRadius: 5,
-    marginTop: 20,
-    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   verifyButtonText: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
     fontFamily: 'Poppins-Regular',
   },

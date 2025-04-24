@@ -23,6 +23,8 @@ const AssetsStock = {
   Robot: require('../assets/images/Robot.png'),
   teacher: require('../assets/images/Teacher.jpeg'),
   child: require('../assets/images/Child.jpeg'),
+  branch1: require('../assets/images/Branch1.jpg'),
+  branch2: require('../assets/images/Branch2.jpg'),
 };
 
 export default AssetsStock;

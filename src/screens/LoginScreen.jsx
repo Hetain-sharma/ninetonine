@@ -9,14 +9,44 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
+import auth from '@react-native-firebase/auth';
+import OtpScreen from './OtpScreen';
 import COLORS from '../constants/color';
 import AssetsStock from '../constants/ImagesContants';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const LoginScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [confirm, setConfirm] = useState(null);
+
+  useEffect(() => {
+    console.log('useEffect confirm updated:', confirm);
+  }, [confirm]);
+
+  async function signInWithPhoneNumber() {
+    if (!phoneNumber || phoneNumber.length !== 10) {
+      console.error('Invalid phone number');
+      return;
+    }
+
+    const formattedNumber = `+91${phoneNumber}`;
+    console.log('Attempting to sign in with:', formattedNumber);
+
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(formattedNumber);
+      console.log('confirmation from Firebase:', confirmation);
+      setConfirm(confirmation);
+
+      // If using navigation and OtpScreen is a separate screen
+      if (navigation) {
+        navigation.navigate('OtpScreen', {confirmation});
+      }
+    } catch (error) {
+      console.error('❌ Firebase Error:', error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -26,42 +56,51 @@ const LoginScreen = ({navigation}) => {
       <ScrollView style={styles.container}>
         <StatusBar hidden />
 
-        <View style={styles.imageContainer}>
-          <Image
-            source={AssetsStock.login}
-            resizeMode="contain"
-            style={styles.image}
-          />
-        </View>
+        {confirm && !navigation ? (
+          <OtpScreen confirm={confirm} />
+        ) : (
+          <>
+            <View style={styles.imageContainer}>
+              <Image
+                source={AssetsStock.login}
+                resizeMode="contain"
+                style={styles.image}
+              />
+            </View>
 
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>
-            Sign in with your{'\n'} mobile number
-          </Text>
-          <Text style={styles.subtitle}>
-            We will send you a Confirmation code
-          </Text>
+            <View style={styles.contentContainer}>
+              <Text style={styles.title}>
+                Sign in with your{'\n'} mobile number
+              </Text>
+              <Text style={styles.subtitle}>
+                We will send you a Confirmation code
+              </Text>
+              <Text style={styles.testingNoText}>
+                [ Test Mobile No. : 9310009651 ]
+              </Text>
 
-          <View style={styles.phoneInputContainer}>
-            <Image source={AssetsStock.india} style={styles.flagIcon} />
-            <View style={styles.divider} />
-            <Text style={styles.countryCode}>+91 -</Text>
-            <TextInput
-              style={styles.phoneInput}
-              placeholder="1234567890"
-              keyboardType="numeric"
-              maxLength={10}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-            />
-          </View>
+              <View style={styles.phoneInputContainer}>
+                <Image source={AssetsStock.india} style={styles.flagIcon} />
+                <View style={styles.divider} />
+                <Text style={styles.countryCode}>+91 -</Text>
+                <TextInput
+                  style={styles.phoneInput}
+                  placeholder="1234567890"
+                  keyboardType="numeric"
+                  maxLength={10}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                />
+              </View>
 
-          <TouchableOpacity
-            style={styles.otpButton}
-            onPress={() => navigation.navigate('OtpScreen')}>
-            <Text style={styles.otpButtonText}>Send OTP</Text>
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity
+                style={styles.otpButton}
+                onPress={signInWithPhoneNumber}>
+                <Text style={styles.otpButtonText}>Send OTP</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -143,7 +182,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     paddingVertical: 12,
     borderRadius: 5,
-
     width: '80%',
     height: 45,
     alignItems: 'center',
@@ -153,5 +191,12 @@ const styles = StyleSheet.create({
     color: COLORS.white || '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  testingNoText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 5,
+    marginBottom: 30,
+    fontFamily: 'Poppins-Regular',
   },
 });
