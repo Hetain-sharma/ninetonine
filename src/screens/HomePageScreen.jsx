@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet, StatusBar} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  StatusBar,
+  ActivityIndicator,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../components/HomepageComponents/Header';
 import BannerCarousel from '../components/HomepageComponents/banner/Banner';
@@ -13,8 +19,35 @@ import QuizCard from '../components/HomepageComponents/Quiz/QuizCard';
 import UpSkilling from '../components/HomepageComponents/upSkills/UpSkilling';
 import YourChild from '../components/HomepageComponents/YourChild/YourChild';
 import COLORS from '../constants/color';
+import {
+  useGetBannersQuery,
+  useGetBlogsQuery,
+  useGetCategorysQuery,
+  useGetEventsQuery,
+  useGetUspsQuery,
+} from '../redux/api/apiSlice';
 
 const HomePage = () => {
+  const banners = useGetBannersQuery();
+  const usps = useGetUspsQuery();
+  const blogs = useGetBlogsQuery();
+  const events = useGetEventsQuery();
+  const categorys = useGetCategorysQuery();
+
+  if (
+    banners.isLoading ||
+    usps.isLoading ||
+    blogs.isLoading ||
+    events.isLoading ||
+    categorys.isLoading
+  )
+    return <ActivityIndicator size="large" color="blue" />;
+
+  console.log('Banners:', banners.data);
+  console.log('USPs:', usps.data);
+  console.log('Blogs:', blogs.data);
+  console.log('Events:', events.data);
+  console.log('Categories:', categorys.data);
   return (
     <>
       <StatusBar backgroundColor={'#FFFFFF'} barStyle="dark-content" />

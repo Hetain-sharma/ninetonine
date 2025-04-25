@@ -6,6 +6,8 @@ import BootSplash from 'react-native-bootsplash';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import {ToastProvider} from './src/service/ToastProvider';
 import {StatusBar} from 'react-native';
+import {Provider} from 'react-redux';
+import {store} from './src/redux/store';
 const App = () => {
   useEffect(() => {
     const init = async () => {
@@ -21,14 +23,16 @@ const App = () => {
   return (
     // Inside return of App component
     <ToastProvider>
-      <StatusBar
-        barStyle="dark-content" // black icons
-        backgroundColor="#ffffff" // white background
-        translucent={false} // no transparency
-      />
-      <NavigationContainer>
-        <DrawerNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <StatusBar
+          barStyle="dark-content" // black icons
+          backgroundColor="#ffffff" // white background
+          translucent={false} // no transparency
+        />
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </Provider>
     </ToastProvider>
   );
 };
