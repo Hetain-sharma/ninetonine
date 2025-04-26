@@ -1,12 +1,23 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import COLORS from '../../../constants/color';
 
-const ProgramCard = ({packageName, subtitle, price, features}) => {
+const ProgramCard = ({
+  packageName,
+  subtitle,
+  price,
+  features,
+  isSelected,
+  onSelect,
+}) => {
   return (
-    <View style={styles.card}>
-      <Text style={styles.cardTitle}>{packageName}</Text>
-      <Text style={styles.cardDescription}>{subtitle}</Text>
+    <TouchableOpacity
+      style={[styles.card, isSelected && styles.selectedCard]}
+      onPress={onSelect}>
+      <View style={styles.cardHeader}>
+        <Text style={styles.packageName}>{packageName}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
 
       <View style={styles.priceContainer}>
         <Text style={styles.currencySymbol}>₹</Text>
@@ -14,15 +25,24 @@ const ProgramCard = ({packageName, subtitle, price, features}) => {
         <Text style={styles.perMonth}>/per month</Text>
       </View>
 
-      {features.map((feature, index) => (
-        <View key={index} style={styles.featureRow}>
-          <View style={[styles.featureIcon, {backgroundColor: feature.color}]}>
-            <Text style={styles.checkmark}>✓</Text>
+      <View style={styles.featuresContainer}>
+        {features.map((feature, index) => (
+          <View key={index} style={styles.featureRow}>
+            <View
+              style={[styles.featureIcon, {backgroundColor: feature.color}]}>
+              <Text style={styles.checkmark}>✓</Text>
+            </View>
+            <Text style={styles.featureText}>{feature.text}</Text>
           </View>
-          <Text style={styles.featureText}>{feature.text}</Text>
+        ))}
+      </View>
+
+      {isSelected && (
+        <View style={styles.selectedIndicator}>
+          <Text style={styles.selectedText}>Selected</Text>
         </View>
-      ))}
-    </View>
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -30,24 +50,28 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
     borderColor: COLORS.border,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 16,
-    marginBottom: 10,
+    marginBottom: 16,
     backgroundColor: COLORS.white,
-    marginTop: 15,
   },
-  cardTitle: {
+  selectedCard: {
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+  },
+  cardHeader: {
+    marginBottom: 12,
+  },
+  packageName: {
     fontSize: 16,
-    fontFamily: 'Poppins-Bold',
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: COLORS.black,
     marginBottom: 4,
+    fontFamily: 'Poppins-Bold',
   },
-  cardDescription: {
+  subtitle: {
     fontSize: 12,
-    fontWeight: '400',
     color: COLORS.gray,
-    marginBottom: 12,
     fontFamily: 'Poppins-Regular',
   },
   priceContainer: {
@@ -56,34 +80,38 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   currencySymbol: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '600',
     color: COLORS.black,
     fontFamily: 'Poppins-Bold',
   },
   price: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: COLORS.black,
+    marginRight: 4,
     fontFamily: 'Poppins-Bold',
   },
   perMonth: {
-    fontSize: 16,
-    color: COLORS.black,
+    fontSize: 12,
+    color: COLORS.gray,
     fontFamily: 'Poppins-Regular',
+  },
+  featuresContainer: {
+    marginBottom: 8,
   },
   featureRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   featureIcon: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 8,
   },
   checkmark: {
     color: COLORS.white,
@@ -93,6 +121,21 @@ const styles = StyleSheet.create({
   featureText: {
     fontSize: 12,
     color: COLORS.black,
+    fontFamily: 'Poppins-Regular',
+  },
+  selectedIndicator: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  selectedText: {
+    color: COLORS.white,
+    fontSize: 10,
+    fontWeight: '500',
     fontFamily: 'Poppins-Regular',
   },
 });

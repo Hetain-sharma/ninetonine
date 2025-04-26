@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -15,15 +16,16 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AssetsStock from '../../constants/ImagesContants';
+import {useDispatch} from 'react-redux';
+import {setBranch} from '../../redux/Enroll/enrollSlice';
 
 // Get screen dimensions for responsiveness
 const {width} = Dimensions.get('window');
 const isSmallScreen = width < 375;
 
 const BranchSelector = ({nextStep}) => {
-  const handleForm = () => {
-    step + 1;
-  };
+  const dispatch = useDispatch();
+
   // Sample data for the branches
   const branches = [
     {
@@ -52,6 +54,21 @@ const BranchSelector = ({nextStep}) => {
       imageUrl: AssetsStock.branch1,
     },
   ];
+
+  const handleSelectBranch = branch => {
+    // Save branch data to Redux store
+    dispatch(
+      setBranch({
+        id: branch.id,
+        name: branch.name,
+        address: branch.address,
+        phone: branch.phone,
+      }),
+    );
+
+    // Move to next step
+    nextStep();
+  };
 
   return (
     <View style={styles.container}>
@@ -95,7 +112,9 @@ const BranchSelector = ({nextStep}) => {
               <Text style={styles.ratingText}>{branch.rating}</Text>
             </View>
 
-            <TouchableOpacity style={styles.selectButton} onPress={nextStep}>
+            <TouchableOpacity
+              style={styles.selectButton}
+              onPress={() => handleSelectBranch(branch)}>
               <Text style={styles.selectButtonText}>Select This Branch</Text>
             </TouchableOpacity>
           </View>
@@ -112,6 +131,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     paddingHorizontal: 16,
     paddingTop: 10,
+  },
+  headerContainer: {
+    marginBottom: 10,
   },
   title: {
     fontSize: 16,

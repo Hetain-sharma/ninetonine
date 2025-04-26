@@ -1,19 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
+  Alert,
   Dimensions,
 } from 'react-native';
 import COLORS from '../../../constants/color';
 import ProgramCard from './ProgramCard';
+import {useDispatch} from 'react-redux';
+import {setFeePlan} from '../../../redux/Enroll/enrollSlice';
 
 // Array of packages
 const packages = [
   {
+    id: '1',
     packageName: 'Full - Time Program',
     subtitle: 'Perfect for families seeking comprehensive weekday care',
     price: '5000',
@@ -25,6 +28,7 @@ const packages = [
     ],
   },
   {
+    id: '2',
     packageName: 'Part - Time Program',
     subtitle: 'Ideal for parents needing flexible hours',
     price: '3000',
@@ -37,6 +41,36 @@ const packages = [
 ];
 
 const FeeStructureScreen = ({prevStep, nextStep}) => {
+  const dispatch = useDispatch();
+  const [selectedPackage, setSelectedPackage] = useState(null);
+
+  const handleSelectPackage = pkg => {
+    setSelectedPackage(pkg);
+  };
+
+  const handleNext = () => {
+    if (!selectedPackage) {
+      Alert.alert(
+        'Selection Required',
+        'Please select a program package to continue.',
+        [{text: 'OK'}],
+      );
+      return;
+    }
+
+    // Save fee plan to Redux store
+    dispatch(
+      setFeePlan({
+        id: selectedPackage.id,
+        packageName: selectedPackage.packageName,
+        price: selectedPackage.price,
+      }),
+    );
+
+    // Move to next step
+    nextStep();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -55,6 +89,8 @@ const FeeStructureScreen = ({prevStep, nextStep}) => {
               subtitle={pkg.subtitle}
               price={pkg.price}
               features={pkg.features}
+              isSelected={selectedPackage?.id === pkg.id}
+              onSelect={() => handleSelectPackage(pkg)}
             />
           ))}
 
@@ -62,7 +98,7 @@ const FeeStructureScreen = ({prevStep, nextStep}) => {
             <TouchableOpacity style={styles.previousButton} onPress={prevStep}>
               <Text style={styles.previousButtonText}>Previous</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nextButton} onPress={nextStep}>
+            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
               <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
           </View>

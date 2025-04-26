@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
+  Alert,
   Dimensions,
 } from 'react-native';
 import COLORS from '../../constants/color';
+import {useDispatch} from 'react-redux';
+import {setPaymentInfo} from '../../redux/Enroll/enrollSlice';
 
 const PlanStructure = ({nextStep, prevStep}) => {
+  const dispatch = useDispatch();
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
   // Registration features with their respective colors
   const registrationFeatures = [
     {text: 'Pay the $100 registration fee now', color: '#FFD700'},
@@ -41,6 +46,37 @@ const PlanStructure = ({nextStep, prevStep}) => {
     </>
   );
 
+  const handleSelectRegistrationPlan = () => {
+    setSelectedPlan('registration');
+  };
+
+  const handleSelectFullTimePlan = () => {
+    setSelectedPlan('fulltime');
+  };
+
+  const handleNext = () => {
+    if (!selectedPlan) {
+      Alert.alert(
+        'Selection Required',
+        'Please select a payment plan to continue.',
+        [{text: 'OK'}],
+      );
+      return;
+    }
+
+    // Save payment info to Redux store
+    dispatch(
+      setPaymentInfo({
+        planType: selectedPlan,
+        amount: selectedPlan === 'registration' ? '100' : '5000',
+        paymentMethod: 'pending',
+      }),
+    );
+
+    // Move to next step
+    nextStep();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -51,16 +87,28 @@ const PlanStructure = ({nextStep, prevStep}) => {
           </Text>
 
           {/* Registration Fee Card */}
-          <View style={styles.registrationCard}>
+          <TouchableOpacity
+            style={[
+              styles.registrationCard,
+              selectedPlan === 'registration' && styles.selectedCard,
+            ]}
+            onPress={handleSelectRegistrationPlan}>
             <Text style={styles.cardTitle}>Pay Registration Fee Now</Text>
             <FeatureList features={registrationFeatures} />
-            <TouchableOpacity style={styles.purpleButton}>
-              <Text style={styles.buttonText}>Pay $100 Registration Free</Text>
+            <TouchableOpacity
+              style={styles.purpleButton}
+              onPress={handleSelectRegistrationPlan}>
+              <Text style={styles.buttonText}>Pay $100 Registration Fee</Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
 
           {/* Program Card */}
-          <View style={styles.programCard}>
+          <TouchableOpacity
+            style={[
+              styles.programCard,
+              selectedPlan === 'fulltime' && styles.selectedCard,
+            ]}
+            onPress={handleSelectFullTimePlan}>
             <Text style={styles.cardTitle}>Full - Time Program</Text>
             <Text style={styles.cardDescription}>
               Perfect for families seeking comprehensive weekday care
@@ -74,17 +122,19 @@ const PlanStructure = ({nextStep, prevStep}) => {
 
             <FeatureList features={programFeatures} />
 
-            <TouchableOpacity style={styles.purpleButton}>
+            <TouchableOpacity
+              style={styles.purpleButton}
+              onPress={handleSelectFullTimePlan}>
               <Text style={styles.buttonText}>Select Plan</Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
 
           {/* Navigation Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.previousButton} onPress={prevStep}>
               <Text style={styles.previousButtonText}>Previous</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nextButton} onPress={nextStep}>
+            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
               <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
           </View>
@@ -140,6 +190,10 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     backgroundColor: COLORS.white,
+  },
+  selectedCard: {
+    borderColor: COLORS.primary,
+    borderWidth: 2,
   },
   cardTitle: {
     fontSize: 16,

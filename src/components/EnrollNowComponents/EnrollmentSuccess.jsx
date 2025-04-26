@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import COLORS from '../../constants/color';
 import Feather from 'react-native-vector-icons/Feather';
+import {useSelector} from 'react-redux';
 
 const EnrollmentSuccess = () => {
+  const enrollmentData = useSelector(state => state.enroll) || {};
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -39,22 +35,30 @@ const EnrollmentSuccess = () => {
 
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Child's Name</Text>
-              <Text style={styles.detailValue}>Emma</Text>
+              <Text style={styles.detailValue}>
+                {enrollmentData?.userDetails?.childName || 'Emma'}
+              </Text>
             </View>
 
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Branch</Text>
-              <Text style={styles.detailValue}>Sunshine Valley Preschool</Text>
+              <Text style={styles.detailValue}>
+                {enrollmentData?.branch?.name || 'Sunshine Valley Preschool'}
+              </Text>
             </View>
 
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Selected Plan</Text>
-              <Text style={styles.detailValue}>Full-Day Program</Text>
+              <Text style={styles.detailValue}>
+                {enrollmentData?.feePlan?.packageName || 'Full-Day Program'}
+              </Text>
             </View>
 
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Payment ID</Text>
-              <Text style={styles.detailValue}>PAY12345</Text>
+              <Text style={styles.detailValue}>
+                PAY{Math.floor(Math.random() * 90000) + 10000}
+              </Text>
             </View>
           </View>
         </View>

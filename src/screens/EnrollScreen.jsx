@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions, StatusBar, Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,12 +12,20 @@ import PlanStructure from '../components/EnrollNowComponents/PlanStructure';
 import PaymentOptions from '../components/EnrollNowComponents/Payment/PaymentOptions';
 import EnrollmentSuccess from '../components/EnrollNowComponents/EnrollmentSuccess';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import {resetEnrollment} from '../redux/Enroll/enrollSlice';
 
 const {width} = Dimensions.get('window');
 const isSmallScreen = width < 375;
 
 const EnrollScreen = () => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
+
+  // Reset enrollment data when component mounts
+  useEffect(() => {
+    dispatch(resetEnrollment());
+  }, [dispatch]);
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 6));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));

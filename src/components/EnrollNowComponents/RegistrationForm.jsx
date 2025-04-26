@@ -6,14 +6,18 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  SafeAreaView,
+  Alert,
   Dimensions,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {RadioButton} from 'react-native-paper';
 import COLORS from '../../constants/color';
+import {useDispatch} from 'react-redux';
+import {setUserDetails} from '../../redux/Enroll/enrollSlice';
 
 const RegistrationForm = ({prevStep, nextStep}) => {
+  const dispatch = useDispatch();
+
   const [childName, setChildName] = useState('');
   const [age, setAge] = useState('');
   const [fatherName, setFatherName] = useState('');
@@ -21,8 +25,89 @@ const RegistrationForm = ({prevStep, nextStep}) => {
   const [programType, setProgramType] = useState('');
   const [showPicker, setShowPicker] = useState(false);
 
+  // Form validation errors
+  const [errors, setErrors] = useState({
+    childName: '',
+    age: '',
+    fatherName: '',
+    phoneNumber: '',
+    programType: '',
+  });
+
   // Generate age options from 1 to 18
   const ageOptions = Array.from({length: 18}, (_, i) => (i + 1).toString());
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      childName: '',
+      age: '',
+      fatherName: '',
+      phoneNumber: '',
+      programType: '',
+    };
+
+    // Validate child name
+    if (!childName.trim()) {
+      newErrors.childName = 'Child name is required';
+      isValid = false;
+    }
+
+    // Validate age
+    if (!age) {
+      newErrors.age = 'Age is required';
+      isValid = false;
+    }
+
+    // Validate father name
+    if (!fatherName.trim()) {
+      newErrors.fatherName = 'Father name is required';
+      isValid = false;
+    }
+
+    // Validate phone number
+    if (!phoneNumber.trim()) {
+      newErrors.phoneNumber = 'Phone number is required';
+      isValid = false;
+    } else if (!/^[6-9]\d{9}$/.test(phoneNumber.trim())) {
+      newErrors.phoneNumber = 'Please enter a valid Indian mobile number';
+      isValid = false;
+    }
+
+    // Validate program type
+    if (!programType) {
+      newErrors.programType = 'Please select a program type';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleNext = () => {
+    if (validateForm()) {
+      // Save user details to Redux store
+      dispatch(
+        setUserDetails({
+          childName,
+          age,
+          fatherName,
+          phoneNumber,
+          programType,
+        }),
+      );
+
+      // Move to next step
+      nextStep();
+    } else {
+      // Show alert for validation errors
+      Alert.alert(
+        'Validation Error',
+        'Please fill in all required fields correctly.',
+        [{text: 'OK'}],
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -35,16 +120,24 @@ const RegistrationForm = ({prevStep, nextStep}) => {
 
           <Text style={styles.label}>Child's Name</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, errors.childName ? styles.inputError : null]}
             placeholder="Enter Child's Name"
             value={childName}
-            onChangeText={setChildName}
+            onChangeText={text => {
+              setChildName(text);
+              if (errors.childName) {
+                setErrors({...errors, childName: ''});
+              }
+            }}
           />
+          {errors.childName ? (
+            <Text style={styles.errorText}>{errors.childName}</Text>
+          ) : null}
 
           <Text style={styles.label}>Age</Text>
           {!showPicker && (
             <TouchableOpacity
-              style={styles.input}
+              style={[styles.input, errors.age ? styles.inputError : null]}
               onPress={() => setShowPicker(true)}>
               <Text style={age ? styles.pickerText : styles.placeholderText}>
                 {age || 'Age'}
@@ -52,6 +145,9 @@ const RegistrationForm = ({prevStep, nextStep}) => {
               <Text style={styles.dropdownIcon}>▼</Text>
             </TouchableOpacity>
           )}
+          {errors.age ? (
+            <Text style={styles.errorText}>{errors.age}</Text>
+          ) : null}
 
           {showPicker && (
             <View style={styles.pickerContainer}>
@@ -60,6 +156,9 @@ const RegistrationForm = ({prevStep, nextStep}) => {
                 onValueChange={(itemValue, itemIndex) => {
                   setAge(itemValue);
                   setShowPicker(false);
+                  if (errors.age) {
+                    setErrors({...errors, age: ''});
+                  }
                 }}
                 style={styles.picker}>
                 <Picker.Item label="Select Age" value="" />
@@ -79,23 +178,50 @@ const RegistrationForm = ({prevStep, nextStep}) => {
 
           <Text style={styles.label}>Father's Name</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, errors.fatherName ? styles.inputError : null]}
             placeholder="Enter Father Name"
             value={fatherName}
-            onChangeText={setFatherName}
+            onChangeText={text => {
+              setFatherName(text);
+              if (errors.fatherName) {
+                setErrors({...errors, fatherName: ''});
+              }
+            }}
           />
+          {errors.fatherName ? (
+            <Text style={styles.errorText}>{errors.fatherName}</Text>
+          ) : null}
 
           <Text style={styles.label}>Phone Number</Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              errors.phoneNumber ? styles.inputError : null,
+            ]}
             placeholder="Enter Phone Number"
             value={phoneNumber}
-            onChangeText={setPhoneNumber}
+            onChangeText={text => {
+              setPhoneNumber(text);
+              if (errors.phoneNumber) {
+                setErrors({...errors, phoneNumber: ''});
+              }
+            }}
             keyboardType="phone-pad"
+            maxLength={10}
           />
+          {errors.phoneNumber ? (
+            <Text style={styles.errorText}>{errors.phoneNumber}</Text>
+          ) : null}
 
           <Text style={styles.label}>Program Type</Text>
-          <RadioButton.Group onValueChange={setProgramType} value={programType}>
+          <RadioButton.Group
+            onValueChange={value => {
+              setProgramType(value);
+              if (errors.programType) {
+                setErrors({...errors, programType: ''});
+              }
+            }}
+            value={programType}>
             <View style={styles.radioOption}>
               <RadioButton value="preschool" color="#C4C4D6" />
               <Text style={styles.radioText}>Preschool</Text>
@@ -109,13 +235,16 @@ const RegistrationForm = ({prevStep, nextStep}) => {
               <Text style={styles.radioText}>Both</Text>
             </View>
           </RadioButton.Group>
+          {errors.programType ? (
+            <Text style={styles.errorText}>{errors.programType}</Text>
+          ) : null}
 
           {/* Navigation Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.previousButton} onPress={prevStep}>
               <Text style={styles.previousButtonText}>Previous</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nextButton} onPress={nextStep}>
+            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
               <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
           </View>
@@ -182,6 +311,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  inputError: {
+    borderColor: 'red',
+    marginBottom: 5,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 10,
+    marginTop: -5,
   },
   pickerContainer: {
     borderWidth: 1,
