@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
 import {FeaturedServiceCard} from './FeaturedServiceCard';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import AssetsStock from '../../../constants/ImagesContants';
 
 const data = [

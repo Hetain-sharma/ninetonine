@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import YoutubeIframe from 'react-native-youtube-iframe';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import COLORS from '../../../constants/color';
 
 const SkillCard = () => {

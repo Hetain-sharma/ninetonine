@@ -6,9 +6,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../constants/color';
 
 // Import the screens for your tabs
-import HomePage from '../screens/HomePageScreen';
-import EnrollScreen from '../screens/EnrollScreen';
-import RedirectScreen from '../components/OtherScreens/RedirectScreen';
+import UserPage from '../screens/Home/HomePage';
+import RedirectScreen from '../screens/OtherScreens/RedirectScreen';
+import EnrollScreen from '../screens/ViewDetails/EnrollScreen';
+import HomePage from '../screens/Home/HomePage';
+import ProgressTracker from '../screens/ViewDetails/ProgressTracker/ProgressTracker';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,8 +22,8 @@ const TABS = [
     iconFocused: 'home',
   },
   {
-    name: 'Enroll',
-    component: EnrollScreen,
+    name: 'Progress',
+    component: ProgressTracker,
     icon: 'time-outline',
     iconFocused: 'time',
   },

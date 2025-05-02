@@ -16,7 +16,6 @@ const {width} = Dimensions.get('window');
 
 const CourseCard = ({
   onPress,
-  key,
   title,
   subtitle,
   duration,

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
 import UpSkillCard from './UpSkillCard';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 
 const upSkillData = [
   {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import Event from './Event';
 import AssetsStock from '../../../constants/ImagesContants';
 

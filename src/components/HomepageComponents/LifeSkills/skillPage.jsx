@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import LifeSkillCard from './LifeSkillCard';
 import {ScrollView} from 'react-native-gesture-handler';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import AssetsStock from '../../../constants/ImagesContants';
 
 const packingTips = [

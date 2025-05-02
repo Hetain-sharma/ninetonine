@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../constants/color';
 
 const DrawerList = [
-  {icon: 'home', label: 'Home', navigateTo: 'Home'},
+  {icon: 'home', label: 'Home', navigateTo: 'Main'},
   {icon: 'contact-phone', label: 'Contact Us', navigateTo: 'ReDirect'},
   {icon: 'help-outline', label: 'Need Help', navigateTo: 'ReDirect'},
 ];

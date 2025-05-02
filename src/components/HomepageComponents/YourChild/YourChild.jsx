@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import Benifits from './Benifits';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import COLORS from '../../../constants/color';
 
 const course = [
@@ -74,7 +74,7 @@ const YourChild = () => {
         <View style={{marginTop: 10}}>
           {filteredCourses.map((item, index) => (
             <Benifits
-              key={index}
+              // key={index}
               title={item.title}
               subtitle={item.subtitle}
               duration={item.duration}

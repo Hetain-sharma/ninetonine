@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React from 'react';
-import Heading from '../SmallComponents/Heading';
+import Heading from '../../CommonComponents/Heading';
 import COLORS from '../../../constants/color';
 import {useNavigation} from '@react-navigation/native';
 import AssetsStock from '../../../constants/ImagesContants';

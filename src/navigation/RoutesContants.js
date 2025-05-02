@@ -4,6 +4,10 @@ export const SCREENS = {
   LOGIN_SCREEN: 'Login',
   REGISTER_SCREEN: 'Register',
   OTP_SCREEN: 'OtpScreen',
-  HOMEPAGE_SCREEN: 'Homepage',
+  MAIN_SCREEN: 'Main',
   REDIRECT: 'ReDirect',
+  ViewDetails_Screen: 'ViewDetails',
+  AddNewGoal_Screen: 'AddNewGoal',
+  BookClasses_Screen: 'BookClasses',
+  ENROLL_SCREEN: 'EnrollScreen',
 };

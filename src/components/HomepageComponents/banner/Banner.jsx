@@ -58,7 +58,7 @@ const BannerCarousel = () => {
   const navigation = useNavigation();
 
   const handleEnrollPress = () => {
-    navigation.navigate('Enroll'); // replace 'TargetScreen' with your actual screen name
+    navigation.navigate('EnrollScreen'); // replace 'TargetScreen' with your actual screen name
   };
 
   const handleScroll = event => {
