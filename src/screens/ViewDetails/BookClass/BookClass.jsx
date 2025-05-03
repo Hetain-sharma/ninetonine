@@ -31,12 +31,7 @@ const BookClass = () => {
   const navigation = useNavigation();
 
   const timeOptions = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM'];
-  const teacherOptions = [
-    'Ms. Smith',
-    'Mr. Johnson',
-    'Ms. Williams',
-    'Mr. Brown',
-  ];
+
   const classTypeOptions = [
     'Group Class',
     'Individual Class',
@@ -63,7 +58,6 @@ const BookClass = () => {
     const formData = {
       date: date.toISOString().split('T')[0],
       time,
-      teacher,
       classType,
     };
     console.log('Form Data:', formData);
@@ -183,26 +177,26 @@ const BookClass = () => {
           </View>
 
           <View style={styles.halfColumn}>
-            <Text style={styles.sectionTitle}>Teacher</Text>
+            <Text style={styles.sectionTitle}>Select Class Type</Text>
             <TouchableOpacity
               style={styles.dropdownButton}
-              onPress={() => setShowTeacherDropdown(true)}>
+              onPress={() => setShowClassTypeDropdown(true)}>
               <Text style={styles.dropdownButtonText}>
-                {teacher || 'Select District'}
+                {classType || 'Select'}
               </Text>
               <Text style={styles.dropdownArrow}>▼</Text>
             </TouchableOpacity>
-            {showTeacherDropdown &&
+            {showClassTypeDropdown &&
               renderDropdown(
-                teacherOptions,
-                teacher,
-                setTeacher,
-                setShowTeacherDropdown,
+                classTypeOptions,
+                classType,
+                setClassType,
+                setShowClassTypeDropdown,
               )}
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Select Class Type</Text>
+        {/* <Text style={styles.sectionTitle}>Select Class Type</Text>
         <TouchableOpacity
           style={styles.fullWidthDropdown}
           onPress={() => setShowClassTypeDropdown(true)}>
@@ -215,7 +209,7 @@ const BookClass = () => {
             classType,
             setClassType,
             setShowClassTypeDropdown,
-          )}
+          )} */}
 
         <TouchableOpacity
           style={styles.createButton}
