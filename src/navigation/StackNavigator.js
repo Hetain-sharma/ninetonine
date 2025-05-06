@@ -11,11 +11,13 @@ import IntroScreen from '../screens/OnBoarding/IntroScreen';
 import OnboardingScreen from '../screens/OnBoarding/OnboardingScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import OtpScreen from '../screens/Auth/OtpScreen';
-import ViewDetails from '../screens/ViewDetails/ViewDetailsScreen/ViewDetails';
+
 import RedirectScreen from '../screens/OtherScreens/RedirectScreen';
-import AddNewGoal from '../screens/ViewDetails/AddGoal/AddNewGoal';
-import BookClass from '../screens/ViewDetails/BookClass/BookClass';
-import EnrollScreen from '../screens/ViewDetails/EnrollScreen';
+import ViewDetailsScreen from '../screens/NestedScreens/ViewDetails/ViewDetailsScreen';
+import LearningGoalsScreen from '../screens/NestedScreens/ViewDetails/LearningGoalsScreen';
+import BookClassScreen from '../screens/NestedScreens/ViewDetails/BookClassScreen';
+import EnrollScreen from '../screens/EnrollScreen';
+import School from '../screens/School';
 
 const Stack = createStackNavigator();
 
@@ -31,9 +33,19 @@ const StackNavigator = () => (
     <Stack.Screen name={SCREENS.MAIN_SCREEN} component={TabNavigator} />
     <Stack.Screen name={SCREENS.ENROLL_SCREEN} component={EnrollScreen} />
     <Stack.Screen name={SCREENS.REDIRECT} component={RedirectScreen} />
-    <Stack.Screen name={SCREENS.ViewDetails_Screen} component={ViewDetails} />
-    <Stack.Screen name={SCREENS.AddNewGoal_Screen} component={AddNewGoal} />
-    <Stack.Screen name={SCREENS.BookClasses_Screen} component={BookClass} />
+    <Stack.Screen name={SCREENS.SCHOOL_SCREEN} component={School} />
+    <Stack.Screen
+      name={SCREENS.ViewDetails_Screen}
+      component={ViewDetailsScreen}
+    />
+    <Stack.Screen
+      name={SCREENS.AddNewGoal_Screen}
+      component={LearningGoalsScreen}
+    />
+    <Stack.Screen
+      name={SCREENS.BookClasses_Screen}
+      component={BookClassScreen}
+    />
   </Stack.Navigator>
 );
 

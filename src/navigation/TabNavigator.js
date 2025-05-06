@@ -10,11 +10,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import COLORS from '../constants/color';
 
 // Import the screens for your tabs
-import HomePage from '../screens/Home/HomePage';
-import ProgressTracker from '../screens/ViewDetails/ProgressTracker/ProgressTracker';
+
 import RedirectScreen from '../screens/OtherScreens/RedirectScreen';
-import LearningResourcesScreen from '../screens/ViewDetails/ResourcesScreen/LearningResourcesScreen';
-import CalenderScreen from '../screens/ViewDetails/Calender/CalenderScreen';
+import ProgressScreen from '../screens/ProgressScreen';
+import ResourcesScreen from '../screens/ResourcesScreen';
+import HomePage from '../screens/HomeScreen/HomePage';
+import CalenderScreen from '../screens/CalendarScreen';
+import School from '../screens/School';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +29,7 @@ const TABS = [
   },
   {
     name: 'Progress',
-    component: ProgressTracker,
+    component: ProgressScreen,
     icon: 'time-outline',
     iconFocused: 'time',
   },
@@ -39,7 +41,7 @@ const TABS = [
   },
   {
     name: 'Resources',
-    component: LearningResourcesScreen,
+    component: ResourcesScreen,
     icon: 'grid-outline',
     iconFocused: 'grid',
   },
