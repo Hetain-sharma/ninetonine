@@ -1,6 +1,7 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Header from './Header';
 
 const CurrentLearningGoals = ({goals, onEditGoals, onAddGoals, onViewAll}) => {
   // Function to determine the color of the progress circle based on the percentage
@@ -38,50 +39,56 @@ const CurrentLearningGoals = ({goals, onEditGoals, onAddGoals, onViewAll}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Current Learning Goals</Text>
-        <TouchableOpacity onPress={onViewAll} style={styles.viewAllButton}>
-          <Text style={styles.viewAllText}>View All</Text>
-          <Icon name="chevron-right" size={20} color="#000" />
+    <View style={styles.container}>
+      <View style={styles.GoalsContainer}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Current Learning Goals</Text>
+          <TouchableOpacity onPress={onViewAll} style={styles.viewAllButton}>
+            <Text style={styles.viewAllText}>View All</Text>
+            <Icon name="chevron-right" size={20} color="#000" />
+          </TouchableOpacity>
+        </View>
+
+        {goals.map((goal, index) => (
+          <View key={index} style={styles.goalCard}>
+            <View style={styles.goalContent}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  {backgroundColor: getIconBackgroundColor(goal.category)},
+                ]}>
+                <Icon name="star" size={24} color="#000" />
+              </View>
+              <View style={styles.goalInfo}>
+                <Text style={styles.goalTitle}>{goal.title}</Text>
+                <Text style={styles.goalCategory}>{goal.category}</Text>
+              </View>
+              {renderProgressCircle(goal.progress)}
+            </View>
+          </View>
+        ))}
+
+        <TouchableOpacity style={styles.editButton} onPress={onEditGoals}>
+          <Icon name="edit" size={20} color="#fff" />
+          <Text style={styles.buttonText}>Edit Goals</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.addButton} onPress={onAddGoals}>
+          <Icon name="add" size={20} color="#4B56D2" />
+          <Text style={styles.addButtonText}>Add Goals</Text>
         </TouchableOpacity>
       </View>
-
-      {goals.map((goal, index) => (
-        <View key={index} style={styles.goalCard}>
-          <View style={styles.goalContent}>
-            <View
-              style={[
-                styles.iconContainer,
-                {backgroundColor: getIconBackgroundColor(goal.category)},
-              ]}>
-              <Icon name="star" size={24} color="#000" />
-            </View>
-            <View style={styles.goalInfo}>
-              <Text style={styles.goalTitle}>{goal.title}</Text>
-              <Text style={styles.goalCategory}>{goal.category}</Text>
-            </View>
-            {renderProgressCircle(goal.progress)}
-          </View>
-        </View>
-      ))}
-
-      <TouchableOpacity style={styles.editButton} onPress={onEditGoals}>
-        <Icon name="edit" size={20} color="#fff" />
-        <Text style={styles.buttonText}>Edit Goals</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.addButton} onPress={onAddGoals}>
-        <Icon name="add" size={20} color="#4B56D2" />
-        <Text style={styles.addButtonText}>Add Goals</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  GoalsContainer: {
     padding: 16,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',

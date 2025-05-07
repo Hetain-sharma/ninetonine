@@ -11,4 +11,6 @@ export const SCREENS = {
   BookClasses_Screen: 'BookClasses',
   ENROLL_SCREEN: 'EnrollScreen',
   SCHOOL_SCREEN: 'School',
+  SELECT_SCHOOL: 'SelectSchool',
+  NOTIFICATION_SCREEN: 'Notification',
 };

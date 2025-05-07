@@ -291,10 +291,14 @@ const School = () => {
 
           {/* Action Buttons */}
           <View style={styles.actionButtonsContainer}>
-            <TouchableOpacity style={styles.bookButton}>
+            <TouchableOpacity
+              style={styles.bookButton}
+              onPress={() => navigation.navigate('BookClasses')}>
               <Text style={styles.bookButtonText}>Book Class</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.changeButton}>
+            <TouchableOpacity
+              style={styles.changeButton}
+              onPress={() => navigation.navigate('SelectSchool')}>
               <Text style={styles.changeButtonText}>Change School</Text>
             </TouchableOpacity>
           </View>

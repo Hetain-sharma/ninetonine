@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Header from './Header';
 
 const GoalSearch = ({goals, onAddGoal}) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,55 +48,66 @@ const GoalSearch = ({goals, onAddGoal}) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Icon name="search" size={20} color="#666" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="goals..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
+    <View style={styles.container}>
+      <View style={styles.GoalsContainer}>
+        {/* Search Bar */}
+        <View style={styles.searchContainer}>
+          <Icon
+            name="search"
+            size={20}
+            color="#666"
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="goals..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+
+        {/* Filter Tabs */}
+        <View style={styles.filterContainer}>
+          {filters.map(filter => (
+            <TouchableOpacity
+              key={filter}
+              style={[
+                styles.filterTab,
+                activeFilter === filter && styles.activeFilterTab,
+              ]}
+              onPress={() => setActiveFilter(filter)}>
+              <Text
+                style={[
+                  styles.filterText,
+                  activeFilter === filter && styles.activeFilterText,
+                ]}>
+                {filter}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Goals List */}
+        <FlatList
+          data={filteredGoals}
+          renderItem={renderGoalItem}
+          keyExtractor={(item, index) => `goal-${index}`}
+          contentContainerStyle={styles.goalsList}
         />
       </View>
-
-      {/* Filter Tabs */}
-      <View style={styles.filterContainer}>
-        {filters.map(filter => (
-          <TouchableOpacity
-            key={filter}
-            style={[
-              styles.filterTab,
-              activeFilter === filter && styles.activeFilterTab,
-            ]}
-            onPress={() => setActiveFilter(filter)}>
-            <Text
-              style={[
-                styles.filterText,
-                activeFilter === filter && styles.activeFilterText,
-              ]}>
-              {filter}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Goals List */}
-      <FlatList
-        data={filteredGoals}
-        renderItem={renderGoalItem}
-        keyExtractor={(item, index) => `goal-${index}`}
-        contentContainerStyle={styles.goalsList}
-      />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#fff',
+  },
+  GoalsContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
   },
   searchContainer: {
     flexDirection: 'row',

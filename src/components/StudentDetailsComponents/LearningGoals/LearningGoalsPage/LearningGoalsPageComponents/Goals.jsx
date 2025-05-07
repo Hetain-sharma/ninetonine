@@ -10,15 +10,13 @@ import {
   StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import COLORS from '../../../../../constants/color';
 import {useNavigation} from '@react-navigation/native';
+import Header from './Header';
 
 const Goals = () => {
   const [activeTab, setActiveTab] = useState('My Goals');
   const [selectedTimeframe, setSelectedTimeframe] = useState('3 Months');
-  const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
 
   // Sample data for goals
   const [myGoals, setMyGoals] = useState([
@@ -280,22 +278,7 @@ const Goals = () => {
   };
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerTitle}>Learning Goals</Text>
-          <Text style={styles.headerSubtitle}>
-            Track Emma's learning journey
-          </Text>
-        </View>
-      </View>
-
+    <View style={[styles.container]}>
       {renderTabs()}
 
       {activeTab === 'My Goals' && renderMyGoals()}

@@ -1,32 +1,21 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useState} from 'react';
+
 import CurrentLearningGoals from '../../../components/StudentDetailsComponents/LearningGoals/LearningGoalsPage/LearningGoalsPageComponents/CurrentLearningGoals';
 import Goals from '../../../components/StudentDetailsComponents/LearningGoals/LearningGoalsPage/LearningGoalsPageComponents/Goals';
 import GoalSearch from '../../../components/StudentDetailsComponents/LearningGoals/LearningGoalsPage/LearningGoalsPageComponents/GoalSearch';
+import Header from '../../../components/StudentDetailsComponents/LearningGoals/LearningGoalsPage/LearningGoalsPageComponents/Header';
 
 const LearningGoalsScreen = () => {
-  // Sample data for current goals
+  const [viewMode, setViewMode] = useState('current'); // 'current', 'edit', 'add'
+
   const currentGoals = [
-    {
-      id: 1,
-      title: 'Counting 1-20',
-      category: 'Math',
-      progress: 65,
-    },
-    {
-      id: 2,
-      title: 'Identify Colors',
-      category: 'Visual',
-      progress: 80,
-    },
-    {
-      id: 3,
-      title: 'Social Interaction',
-      category: 'Social',
-      progress: 75,
-    },
+    {id: 1, title: 'Counting 1-20', category: 'Math', progress: 65},
+    {id: 2, title: 'Identify Colors', category: 'Visual', progress: 80},
+    {id: 3, title: 'Social Interaction', category: 'Social', progress: 75},
   ];
 
-  // Sample data for goal search
   const availableGoals = [
     {
       id: 4,
@@ -48,13 +37,15 @@ const LearningGoalsScreen = () => {
     },
   ];
 
-  // Handler functions
+  // Handlers to switch views
   const handleEditGoals = () => {
     console.log('Edit goals pressed');
+    setViewMode('edit');
   };
 
   const handleAddGoals = () => {
     console.log('Add goals pressed');
+    setViewMode('add');
   };
 
   const handleViewAll = () => {
@@ -67,16 +58,22 @@ const LearningGoalsScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Uncomment one of these to see each component individually */}
-      {/* <CurrentLearningGoals
-        goals={currentGoals}
-        onEditGoals={handleEditGoals}
-        onAddGoals={handleAddGoals}
-        onViewAll={handleViewAll}
-      /> */}
-      <Goals />
+      <Header />
 
-      {/* <GoalSearch goals={availableGoals} onAddGoal={handleAddGoal} /> */}
+      {viewMode === 'current' && (
+        <CurrentLearningGoals
+          goals={currentGoals}
+          onEditGoals={handleEditGoals}
+          onAddGoals={handleAddGoals}
+          onViewAll={handleViewAll}
+        />
+      )}
+
+      {viewMode === 'edit' && <Goals />}
+
+      {viewMode === 'add' && (
+        <GoalSearch goals={availableGoals} onAddGoal={handleAddGoal} />
+      )}
     </SafeAreaView>
   );
 };

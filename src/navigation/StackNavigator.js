@@ -18,6 +18,8 @@ import LearningGoalsScreen from '../screens/NestedScreens/ViewDetails/LearningGo
 import BookClassScreen from '../screens/NestedScreens/ViewDetails/BookClassScreen';
 import EnrollScreen from '../screens/EnrollScreen';
 import School from '../screens/School';
+import BranchSelector from '../components/SchoolComponents/BranchSelector';
+import NotificationScreen from '../screens/NotificationsScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,11 @@ const StackNavigator = () => (
     <Stack.Screen name={SCREENS.ENROLL_SCREEN} component={EnrollScreen} />
     <Stack.Screen name={SCREENS.REDIRECT} component={RedirectScreen} />
     <Stack.Screen name={SCREENS.SCHOOL_SCREEN} component={School} />
+    <Stack.Screen name={SCREENS.SELECT_SCHOOL} component={BranchSelector} />
+    <Stack.Screen
+      name={SCREENS.NOTIFICATION_SCREEN}
+      component={NotificationScreen}
+    />
     <Stack.Screen
       name={SCREENS.ViewDetails_Screen}
       component={ViewDetailsScreen}
