@@ -7,9 +7,7 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Header from './Header';
 
 const GoalSearch = ({goals, onAddGoal}) => {
   const [searchQuery, setSearchQuery] = useState('');

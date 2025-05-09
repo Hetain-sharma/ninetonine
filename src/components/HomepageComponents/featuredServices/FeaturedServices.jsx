@@ -3,6 +3,7 @@ import {View, FlatList} from 'react-native';
 import {FeaturedServiceCard} from './FeaturedServiceCard';
 import Heading from '../../CommonComponents/Heading';
 import AssetsStock from '../../../constants/ImagesContants';
+import {useNavigation} from '@react-navigation/native';
 
 const data = [
   {
@@ -26,9 +27,14 @@ const data = [
 ];
 
 export const FeaturedServices = () => {
+  const navigation = useNavigation();
+
+  const handleFeaturedServices = () => {
+    navigation.navigate('FeaturedServices');
+  };
   return (
     <View style={{marginTop: 20}}>
-      <Heading message="Featured Services" />
+      <Heading message="Featured Services" func={handleFeaturedServices} />
       <FlatList
         horizontal
         data={data}

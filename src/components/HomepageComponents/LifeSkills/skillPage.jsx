@@ -12,6 +12,7 @@ import LifeSkillCard from './LifeSkillCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import Heading from '../../CommonComponents/Heading';
 import AssetsStock from '../../../constants/ImagesContants';
+import {useNavigation} from '@react-navigation/native';
 
 const packingTips = [
   {
@@ -41,9 +42,14 @@ const packingTips = [
 ];
 
 const SkillPage = () => {
+  const navigation = useNavigation();
+
+  const handleLifeSkillHacks = () => {
+    navigation.navigate('LifeSkillHacks');
+  };
   return (
     <View style={{marginTop: 20}}>
-      <Heading message="Life Skills Hacks" />
+      <Heading message="Life Skills Hacks" func={handleLifeSkillHacks} />
 
       <FlatList
         data={packingTips}

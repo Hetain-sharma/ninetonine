@@ -20,6 +20,9 @@ import EnrollScreen from '../screens/EnrollScreen';
 import School from '../screens/School';
 import BranchSelector from '../components/SchoolComponents/BranchSelector';
 import NotificationScreen from '../screens/NotificationsScreen';
+import LifeSkillHacks from '../screens/UnRegisteredUser/LifeSkillHacks';
+import EventsScreen from '../screens/UnRegisteredUser/EventsScreen';
+import {FeaturedServicesScreen} from '../screens/UnRegisteredUser/FeaturedServicesScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,9 +41,18 @@ const StackNavigator = () => (
     <Stack.Screen name={SCREENS.SCHOOL_SCREEN} component={School} />
     <Stack.Screen name={SCREENS.SELECT_SCHOOL} component={BranchSelector} />
     <Stack.Screen
+      name={SCREENS.UPCOMING_EVENTS_SCREEN}
+      component={EventsScreen}
+    />
+    <Stack.Screen
+      name={SCREENS.FEATURED_SERVICES}
+      component={FeaturedServicesScreen}
+    />
+    <Stack.Screen
       name={SCREENS.NOTIFICATION_SCREEN}
       component={NotificationScreen}
     />
+    <Stack.Screen name={SCREENS.LIFE_SKILL_HACKS} component={LifeSkillHacks} />
     <Stack.Screen
       name={SCREENS.ViewDetails_Screen}
       component={ViewDetailsScreen}

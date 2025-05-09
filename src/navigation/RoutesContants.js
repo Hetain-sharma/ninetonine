@@ -13,4 +13,7 @@ export const SCREENS = {
   SCHOOL_SCREEN: 'School',
   SELECT_SCHOOL: 'SelectSchool',
   NOTIFICATION_SCREEN: 'Notification',
+  UPCOMING_EVENTS_SCREEN: 'UpcomingEvents',
+  LIFE_SKILL_HACKS: 'LifeSkillHacks',
+  FEATURED_SERVICES: 'FeaturedServices',
 };

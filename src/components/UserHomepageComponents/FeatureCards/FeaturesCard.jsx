@@ -1,58 +1,59 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
+} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Image} from 'react-native';
 import COLORS from '../../../constants/color';
+
+const features = [
+  {
+    name: 'Progress Tracking',
+    image: require('../../../assets/images/ProgressTracking.png'),
+    screen: 'Progress',
+  },
+  {
+    name: 'Switch Time',
+    image: require('../../../assets/images/SwitchTime.png'),
+  },
+  {
+    name: 'Switch Teacher',
+    image: require('../../../assets/images/SwitchTeacher.png'),
+  },
+  {
+    name: 'Payment',
+    image: require('../../../assets/images/Payment.png'),
+  },
+];
 
 const FeaturesCard = () => {
   const navigation = useNavigation();
+
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      style={styles.featureCard}
+      onPress={() => item.screen && navigation.navigate(item.screen)}>
+      <View style={styles.iconContainer}>
+        <Image source={item.image} style={styles.featureIcon} />
+      </View>
+      <Text style={styles.featureText}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.featureCardsContainer}>
-      <View style={styles.featureRow}>
-        <TouchableOpacity
-          style={styles.featureCard}
-          onPress={() => navigation.navigate('Progress')}>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../assets/images/ProgressTracking.png')}
-              style={styles.featureIcon}
-            />
-          </View>
-          <Text style={styles.featureText}>Progress Tracking</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.featureCard}>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../assets/images/SwitchTime.png')}
-              style={styles.featureIcon}
-            />
-          </View>
-          <Text style={styles.featureText}>Switch Time</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.featureRow}>
-        <TouchableOpacity style={styles.featureCard}>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../assets/images/SwitchTeacher.png')}
-              style={styles.featureIcon}
-            />
-          </View>
-          <Text style={styles.featureText}>Switch Teacher</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.featureCard}>
-          <View style={styles.iconContainer}>
-            <Image
-              source={require('../../../assets/images/Payment.png')}
-              style={styles.featureIcon}
-            />
-          </View>
-          <Text style={styles.featureText}>Payment</Text>
-        </TouchableOpacity>
-      </View>
+      <FlatList
+        data={features}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.featureRow}
+        scrollEnabled={false}
+      />
     </View>
   );
 };
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   featureRow: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
   },

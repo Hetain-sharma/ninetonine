@@ -10,6 +10,11 @@ const DrawerList = [
   {icon: 'contact-phone', label: 'Contact Us', navigateTo: 'ReDirect'},
   {icon: 'help-outline', label: 'Need Help', navigateTo: 'ReDirect'},
   {icon: 'notifications', label: 'Notifications', navigateTo: 'Notification'},
+  {
+    icon: 'emoji-events',
+    label: 'Upcoming Events',
+    navigateTo: 'UpcomingEvents',
+  },
 ];
 
 const DrawerLayout = ({icon, label, navigateTo}) => {

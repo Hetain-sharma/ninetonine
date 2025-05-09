@@ -1,10 +1,10 @@
-// screens/SkillsProgress.js
 import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -19,7 +19,7 @@ import ProgressCircle from './ProgressCircle';
 const SkillsProgress = () => {
   const skills = [
     {
-      id: 1,
+      id: '1',
       name: 'Motor Skills',
       progress: 65,
       color: '#7C4DFF',
@@ -28,7 +28,7 @@ const SkillsProgress = () => {
       bgColor: '#E6D6FF',
     },
     {
-      id: 2,
+      id: '2',
       name: 'Language',
       progress: 80,
       color: '#FF5252',
@@ -37,7 +37,7 @@ const SkillsProgress = () => {
       bgColor: '#FFD6D6',
     },
     {
-      id: 3,
+      id: '3',
       name: 'Cognitive',
       progress: 75,
       color: '#4CAF50',
@@ -46,7 +46,7 @@ const SkillsProgress = () => {
       bgColor: '#D6FFD6',
     },
     {
-      id: 4,
+      id: '4',
       name: 'Emotional',
       progress: 58,
       color: '#FFC107',
@@ -55,7 +55,7 @@ const SkillsProgress = () => {
       bgColor: '#FFF2D6',
     },
     {
-      id: 5,
+      id: '5',
       name: 'Social',
       progress: 65,
       color: '#7C4DFF',
@@ -82,6 +82,22 @@ const SkillsProgress = () => {
     }
   };
 
+  const renderSkill = ({item: skill}) => (
+    <TouchableOpacity style={styles.skillItem}>
+      <View style={[styles.iconContainer, {backgroundColor: skill.bgColor}]}>
+        {renderIcon(skill)}
+      </View>
+      <View style={styles.skillInfo}>
+        <Text style={styles.skillName}>{skill.name}</Text>
+        <Text style={styles.skillHint}>Tap to view progress</Text>
+      </View>
+      <View style={styles.progressContainer}>
+        <ProgressCircle percentage={skill.progress} color={skill.color} />
+      </View>
+      <Icon name="chevron-right" size={24} color="#999" />
+    </TouchableOpacity>
+  );
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -92,24 +108,13 @@ const SkillsProgress = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.skillsList}>
-        {skills.map(skill => (
-          <TouchableOpacity key={skill.id} style={styles.skillItem}>
-            <View
-              style={[styles.iconContainer, {backgroundColor: skill.bgColor}]}>
-              {renderIcon(skill)}
-            </View>
-            <View style={styles.skillInfo}>
-              <Text style={styles.skillName}>{skill.name}</Text>
-              <Text style={styles.skillHint}>Tap to view progress</Text>
-            </View>
-            <View style={styles.progressContainer}>
-              <ProgressCircle percentage={skill.progress} color={skill.color} />
-            </View>
-            <Icon name="chevron-right" size={24} color="#999" />
-          </TouchableOpacity>
-        ))}
-      </View>
+      <FlatList
+        data={skills}
+        keyExtractor={item => item.id}
+        renderItem={renderSkill}
+        scrollEnabled={false}
+        contentContainerStyle={styles.skillsList}
+      />
     </ScrollView>
   );
 };

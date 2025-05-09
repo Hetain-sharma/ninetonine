@@ -1,104 +1,75 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from 'react-native';
 import React from 'react';
 import COLORS from '../../../constants/color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Heading from '../../CommonComponents/Heading';
+
+const productData = [
+  {
+    id: '1',
+    title: 'Skillmatics Scratch Art Book for Kids',
+    price: '₹599',
+    image: require('../../../assets/images/SchoolBook1.png'),
+  },
+  {
+    id: '2',
+    title: 'Montessori Slide Puzzle Game',
+    price: '₹489',
+    image: require('../../../assets/images/SchoolBook2.png'),
+  },
+  {
+    id: '3',
+    title: 'Skillmatics Scratch Art Book for Kids',
+    price: '₹599',
+    image: require('../../../assets/images/SchoolBook1.png'),
+  },
+  {
+    id: '4',
+    title: 'Montessori Slide Puzzle Game',
+    price: '₹489',
+    image: require('../../../assets/images/SchoolBook2.png'),
+  },
+];
+
 const Products = () => {
+  const renderItem = ({item}) => (
+    <View style={styles.productCard}>
+      <View style={styles.bestSellerTag}>
+        <Text style={styles.bestSellerText}>Best Sellers</Text>
+      </View>
+      <Image source={item.image} style={styles.productImage} />
+      <Text style={styles.productTitle}>{item.title}</Text>
+      <View style={styles.ratingContainer}>
+        <AntDesign name="star" size={14} color="#FFD700" />
+        <Text style={styles.ratingText}>5.0</Text>
+      </View>
+      <Text style={styles.productPrice}>{item.price}</Text>
+      <TouchableOpacity style={styles.addToCartButton}>
+        <Text style={styles.addToCartText}>ADD TO CART</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.shopContainer}>
-      <View style={styles.sectionHeaderRow}>
-        <Text style={styles.sectionTitle}>Shop School Essentials</Text>
-        <TouchableOpacity style={styles.viewAllButton}>
-          <Text style={styles.viewAllText}>See All</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.productsRow}>
-        <View style={styles.productCard}>
-          <View style={styles.bestSellerTag}>
-            <Text style={styles.bestSellerText}>Best Sellers</Text>
-          </View>
-          <Image
-            source={require('../../../assets/images/SchoolBook1.png')}
-            style={styles.productImage}
-          />
-          <Text style={styles.productTitle}>
-            Skillmatics Scratch Art Book for Kids
-          </Text>
-          <View style={styles.ratingContainer}>
-            <AntDesign name="star" size={14} color="#FFD700" />
-            <Text style={styles.ratingText}>5.0</Text>
-          </View>
-          <Text style={styles.productPrice}>₹599</Text>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={styles.addToCartText}>ADD TO CART</Text>
-          </TouchableOpacity>
-        </View>
+      <Heading message={'Shop School Essentials'} />
 
-        <View style={styles.productCard}>
-          <View style={styles.bestSellerTag}>
-            <Text style={styles.bestSellerText}>Best Sellers</Text>
-          </View>
-          <Image
-            source={require('../../../assets/images/SchoolBook2.png')}
-            style={styles.productImage}
-          />
-          <Text style={styles.productTitle}>Montessori Slide Puzzle Game</Text>
-          <View style={styles.ratingContainer}>
-            <AntDesign name="star" size={14} color="#FFD700" />
-            <Text style={styles.ratingText}>5.0</Text>
-          </View>
-          <Text style={styles.productPrice}>₹489</Text>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={styles.addToCartText}>ADD TO CART</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Products Row 2 */}
-      <View style={styles.productsRow}>
-        <View style={styles.productCard}>
-          <View style={styles.bestSellerTag}>
-            <Text style={styles.bestSellerText}>Best Sellers</Text>
-          </View>
-          <Image
-            source={require('../../../assets/images/SchoolBook1.png')}
-            style={styles.productImage}
-          />
-          <Text style={styles.productTitle}>
-            Skillmatics Scratch Art Book for Kids
-          </Text>
-          <View style={styles.ratingContainer}>
-            <AntDesign name="star" size={14} color="#FFD700" />
-            <Text style={styles.ratingText}>5.0</Text>
-          </View>
-          <Text style={styles.productPrice}>₹599</Text>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={styles.addToCartText}>ADD TO CART</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.productCard}>
-          <View style={styles.bestSellerTag}>
-            <Text style={styles.bestSellerText}>Best Sellers</Text>
-          </View>
-          <Image
-            source={require('../../../assets/images/SchoolBook2.png')}
-            style={styles.productImage}
-          />
-          <View>
-            <Text style={styles.productTitle}>
-              Montessori Slide Puzzle Game
-            </Text>
-            <View style={styles.ratingContainer}>
-              <AntDesign name="star" size={14} color="#FFD700" />
-              <Text style={styles.ratingText}>5.0</Text>
-            </View>
-            <Text style={styles.productPrice}>₹489</Text>
-          </View>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={styles.addToCartText}>ADD TO CART</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <FlatList
+        data={productData}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        numColumns={2}
+        columnWrapperStyle={styles.productsRow}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
+      />
     </View>
   );
 };

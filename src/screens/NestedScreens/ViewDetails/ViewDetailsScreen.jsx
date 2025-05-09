@@ -97,37 +97,12 @@ const ViewDetailsScreen = () => {
             {activeTab === 'Progress' && (
               <ProgressBadgesCard BADGES_DATA={BADGES_DATA} />
             )}
-
-            {/* Additional progress content would go here */}
-            {/* <View style={[styles.badgesContainer, {marginTop: 20}]}>
-              <View style={styles.badgeItem}>
-                <View style={styles.badgeIconContainer}>
-                  <Text style={styles.badgeIcon}>📝</Text>
-                </View>
-                <Text style={styles.badgeText}>Writing Pro</Text>
-              </View>
-              <View style={styles.badgeItem}>
-                <View style={styles.badgeIconContainer}>
-                  <Text style={styles.badgeIcon}>🔢</Text>
-                </View>
-                <Text style={styles.badgeText}>Math Whiz</Text>
-              </View>
-            </View> */}
           </View>
         )}
 
         {activeTab === 'Goals' && (
           <View>
             <LearningGoalCard GOALS_DATA={GOALS_DATA} />
-
-            {/* Additional goals would go here */}
-            {/* <View style={styles.goalItem}>
-              <Text style={styles.goalText}>Read simple words</Text>
-              <Text style={styles.goalPercentage}>65%</Text>
-            </View>
-            <View style={styles.progressBar}>
-              <View style={[styles.progressFill, {width: '65%'}]} />
-            </View> */}
           </View>
         )}
       </ScrollView>

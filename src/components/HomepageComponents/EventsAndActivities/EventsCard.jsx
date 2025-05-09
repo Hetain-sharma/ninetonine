@@ -3,6 +3,7 @@ import {View, FlatList} from 'react-native';
 import Heading from '../../CommonComponents/Heading';
 import Event from './Event';
 import AssetsStock from '../../../constants/ImagesContants';
+import {useNavigation} from '@react-navigation/native';
 
 const eventData = [
   {
@@ -26,9 +27,13 @@ const eventData = [
 ];
 
 const EventsCard = () => {
+  const navigation = useNavigation();
+  const handleUpcomingEvents = () => {
+    navigation.navigate('UpcomingEvents');
+  };
   return (
     <View style={{marginTop: 20}}>
-      <Heading message="Events & Activities" />
+      <Heading message="Events & Activities" func={handleUpcomingEvents} />
       <FlatList
         horizontal
         data={eventData}

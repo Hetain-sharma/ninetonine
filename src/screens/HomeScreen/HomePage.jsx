@@ -5,7 +5,7 @@ import COLORS from '../../constants/color';
 import AuthenticatedHomePage from './AuthenticatedHomePage';
 import UnAuthenticatedHomePage from './UnAuthenticatedHomepage';
 const HomePage = () => {
-  const User = true;
+  const User = false;
   return (
     <>
       <SafeAreaView style={{flex: 1}} edges={['top']}>

@@ -1,4 +1,3 @@
-// screens/Reports.js
 import React from 'react';
 import {
   View,
@@ -6,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../constants/color';
@@ -27,10 +27,25 @@ const Reports = () => {
     {
       id: 3,
       month: 'February',
-      title: 'FebruaryProgress Report',
+      title: 'February Progress Report',
       summary: 'Summary of achievements for this month',
     },
   ];
+
+  const renderReport = ({item}) => (
+    <View key={item.id} style={styles.reportCard}>
+      <View style={styles.reportIcon}>
+        <Icon name="description" size={24} color={COLORS.primary} />
+      </View>
+      <View style={styles.reportInfo}>
+        <Text style={styles.reportTitle}>{item.title}</Text>
+        <Text style={styles.reportSummary}>{item.summary}</Text>
+      </View>
+      <TouchableOpacity style={styles.viewButton}>
+        <Text style={styles.viewButtonText}>View</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -41,26 +56,16 @@ const Reports = () => {
         </Text>
       </View>
 
-      <View style={styles.reportsList}>
-        {reports.map(report => (
-          <View key={report.id} style={styles.reportCard}>
-            <View style={styles.reportIcon}>
-              <Icon name="description" size={24} color={COLORS.primary} />
-            </View>
-            <View style={styles.reportInfo}>
-              <Text style={styles.reportTitle}>{report.title}</Text>
-              <Text style={styles.reportSummary}>{report.summary}</Text>
-            </View>
-            <TouchableOpacity style={styles.viewButton}>
-              <Text style={styles.viewButtonText}>View</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+      <FlatList
+        data={reports}
+        renderItem={renderReport}
+        keyExtractor={item => item.id.toString()}
+        style={styles.reportsList}
+        scrollEnabled={false}
+      />
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
