@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import Menu from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
-import COLORS from '../../constants/color';
+import COLORS from '../../../constants/color';
 
 const Header = () => {
   const navigation = useNavigation();

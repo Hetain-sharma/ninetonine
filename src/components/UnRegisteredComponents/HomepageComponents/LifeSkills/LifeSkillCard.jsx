@@ -1,8 +1,8 @@
 import {Text, TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import COLORS from '../../../constants/color';
-import AssetsStock from '../../../constants/ImagesContants';
+import COLORS from '../../../../constants/color';
+import AssetsStock from '../../../../constants/ImagesContants';
 
 const LifeSkillCard = ({title, subtitle, image}) => {
   const navigation = useNavigation();

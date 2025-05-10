@@ -3,7 +3,7 @@ import React from 'react';
 import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export const FeaturedServiceCard = ({heading, para, image}) => {
+const FeaturedServiceCard = ({heading, para, image}) => {
   const navigation = useNavigation();
   return (
     <View
@@ -70,3 +70,4 @@ export const FeaturedServiceCard = ({heading, para, image}) => {
     </View>
   );
 };
+export default FeaturedServiceCard;

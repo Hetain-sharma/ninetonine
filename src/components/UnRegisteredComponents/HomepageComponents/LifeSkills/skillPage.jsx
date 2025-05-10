@@ -10,8 +10,8 @@ import {
 import React from 'react';
 import LifeSkillCard from './LifeSkillCard';
 import {ScrollView} from 'react-native-gesture-handler';
-import Heading from '../../CommonComponents/Heading';
-import AssetsStock from '../../../constants/ImagesContants';
+import Heading from '../../../CommonComponents/Heading';
+import AssetsStock from '../../../../constants/ImagesContants';
 import {useNavigation} from '@react-navigation/native';
 
 const packingTips = [
@@ -54,6 +54,7 @@ const SkillPage = () => {
       <FlatList
         data={packingTips}
         keyExtractor={item => item.id}
+        scrollEnabled={false}
         horizontal
         contentContainerStyle={{paddingHorizontal: 10}}
         ItemSeparatorComponent={() => <View style={{width: 10}} />}

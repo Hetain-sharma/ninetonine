@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import COLORS from '../../../constants/color';
+import COLORS from '../../../../constants/color';
 import {useNavigation} from '@react-navigation/native';
-import AssetsStock from '../../../constants/ImagesContants';
+import AssetsStock from '../../../../constants/ImagesContants';
 
 const UpSkillCard = ({title, description}) => {
   const navigation = useNavigation();

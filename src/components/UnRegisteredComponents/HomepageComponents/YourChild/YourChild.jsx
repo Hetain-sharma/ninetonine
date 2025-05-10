@@ -1,9 +1,8 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import Benifits from './Benifits';
-import Heading from '../../CommonComponents/Heading';
-import COLORS from '../../../constants/color';
-
+import Heading from '../../../CommonComponents/Heading';
+import COLORS from '../../../../constants/color';
+import Benefits from './Benifits';
 const course = [
   {
     icon: 'brain',
@@ -73,8 +72,8 @@ const YourChild = () => {
         {/* Display Benefits Based on Age Selection */}
         <View style={{marginTop: 10}}>
           {filteredCourses.map((item, index) => (
-            <Benifits
-              // key={index}
+            <Benefits
+              key={index}
               title={item.title}
               subtitle={item.subtitle}
               duration={item.duration}

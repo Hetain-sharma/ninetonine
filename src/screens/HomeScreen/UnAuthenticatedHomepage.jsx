@@ -6,19 +6,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Header from '../../components/HomepageComponents/Header';
-import BannerCarousel from '../../components/HomepageComponents/banner/Banner';
-import AgeSection from '../../components/HomepageComponents/ageSection/AgeSection';
-import SkillCard from '../../components/HomepageComponents/Learning/SkillCard';
-import EventsCard from '../../components/HomepageComponents/EventsAndActivities/EventsCard';
-import SkillPage from '../../components/HomepageComponents/LifeSkills/skillPage';
-import QuizCard from '../../components/HomepageComponents/Quiz/QuizCard';
-import UpSkilling from '../../components/HomepageComponents/upSkills/UpSkilling';
-import YourChild from '../../components/HomepageComponents/YourChild/YourChild';
 import COLORS from '../../constants/color';
-import {FeaturedServices} from '../../components/HomepageComponents/featuredServices/FeaturedServices';
-import {SchoolTypeSection} from '../../components/HomepageComponents/schoolTypeSection/SchoolTypeSection';
 import {
   useGetBannersQuery,
   useGetBlogsQuery,
@@ -26,6 +14,17 @@ import {
   useGetEventsQuery,
   useGetUspsQuery,
 } from '../../redux/api/apiSlice';
+import Header from '../../components/UnRegisteredComponents/HomepageComponents/Header';
+import BannerCarousel from '../../components/UnRegisteredComponents/HomepageComponents/banner/Banner';
+import {SchoolTypeSection} from '../../components/UnRegisteredComponents/HomepageComponents/schoolTypeSection/SchoolTypeSection';
+import AgeSection from '../../components/UnRegisteredComponents/HomepageComponents/ageSection/AgeSection';
+import {FeaturedServices} from '../../components/UnRegisteredComponents/HomepageComponents/featuredServices/FeaturedServices';
+import EventsCard from '../../components/UnRegisteredComponents/HomepageComponents/EventsAndActivities/EventsCard';
+import SkillPage from '../../components/UnRegisteredComponents/HomepageComponents/LifeSkills/skillPage';
+import SkillCard from '../../components/UnRegisteredComponents/HomepageComponents/Learning/SkillCard';
+import QuizCard from '../../components/UnRegisteredComponents/HomepageComponents/Quiz/QuizCard';
+import UpSkilling from '../../components/UnRegisteredComponents/HomepageComponents/upSkills/UpSkilling';
+import YourChild from '../../components/UnRegisteredComponents/HomepageComponents/YourChild/YourChild';
 
 const UnAuthenticatedHomePage = () => {
   const banners = useGetBannersQuery();
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
     padding: 0,
+    marginBottom: 80,
   },
   innerContainer: {
     backgroundColor: COLORS.white,

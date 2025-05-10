@@ -17,6 +17,7 @@ import ResourcesScreen from '../screens/ResourcesScreen';
 import HomePage from '../screens/HomeScreen/HomePage';
 import CalenderScreen from '../screens/CalendarScreen';
 import School from '../screens/School';
+import GalleryScreen from '../screens/RegisteredUser/GalleryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const TABS = [
   },
   {
     name: 'Dashboard',
-    component: RedirectScreen,
+    component: GalleryScreen,
     icon: 'person-outline',
     iconFocused: 'person',
   },

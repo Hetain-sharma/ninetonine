@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import COLORS from '../../../constants/color';
+import COLORS from '../../../../constants/color';
 import {useNavigation} from '@react-navigation/native';
 
 const Event = ({title, description, image}) => {

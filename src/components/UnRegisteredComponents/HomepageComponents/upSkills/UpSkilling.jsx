@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
 import UpSkillCard from './UpSkillCard';
-import Heading from '../../CommonComponents/Heading';
+import Heading from '../../../CommonComponents/Heading';
 
 const upSkillData = [
   {
@@ -32,6 +32,7 @@ const UpSkilling = () => {
       <Heading message="Upskilling" />
       <FlatList
         data={upSkillData}
+        scrollEnabled={false}
         keyExtractor={item => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}

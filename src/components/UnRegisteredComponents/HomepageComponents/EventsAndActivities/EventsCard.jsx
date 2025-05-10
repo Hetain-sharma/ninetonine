@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import Heading from '../../CommonComponents/Heading';
+import Heading from '../../../CommonComponents/Heading';
 import Event from './Event';
-import AssetsStock from '../../../constants/ImagesContants';
+import AssetsStock from '../../../../constants/ImagesContants';
 import {useNavigation} from '@react-navigation/native';
 
 const eventData = [
@@ -37,6 +37,7 @@ const EventsCard = () => {
       <FlatList
         horizontal
         data={eventData}
+        scrollEnabled={false}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <Event

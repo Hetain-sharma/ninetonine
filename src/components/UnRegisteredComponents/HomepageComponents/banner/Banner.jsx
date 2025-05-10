@@ -8,8 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import AssetsStock from '../../../constants/ImagesContants';
-import COLORS from '../../../constants/color';
+import AssetsStock from '../../../../constants/ImagesContants';
+import COLORS from '../../../../constants/color';
 import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('window');

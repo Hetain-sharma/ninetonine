@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 
 import React from 'react';
-import AssetsStock from '../../../constants/ImagesContants';
+import AssetsStock from '../../../../constants/ImagesContants';
 
 export const SchoolTypeSection = () => {
   return (

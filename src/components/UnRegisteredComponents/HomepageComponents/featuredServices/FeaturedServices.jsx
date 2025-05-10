@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, FlatList} from 'react-native';
-import {FeaturedServiceCard} from './FeaturedServiceCard';
-import Heading from '../../CommonComponents/Heading';
-import AssetsStock from '../../../constants/ImagesContants';
+import Heading from '../../../CommonComponents/Heading';
+import AssetsStock from '../../../../constants/ImagesContants';
 import {useNavigation} from '@react-navigation/native';
+import FeaturedServiceCard from './FeaturedServiceCard';
 
 const data = [
   {
@@ -38,6 +38,7 @@ export const FeaturedServices = () => {
       <FlatList
         horizontal
         data={data}
+        scrollEnabled={false}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <FeaturedServiceCard

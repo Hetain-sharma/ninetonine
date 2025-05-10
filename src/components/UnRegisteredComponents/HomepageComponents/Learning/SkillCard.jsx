@@ -1,8 +1,8 @@
 import React, {useState, useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import YoutubeIframe from 'react-native-youtube-iframe';
-import Heading from '../../CommonComponents/Heading';
-import COLORS from '../../../constants/color';
+import Heading from '../../../CommonComponents/Heading';
+import COLORS from '../../../../constants/color';
 
 const SkillCard = () => {
   const [playing, setPlaying] = useState(false);

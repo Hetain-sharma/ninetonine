@@ -10,11 +10,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import COLORS from '../../../constants/color';
+import COLORS from '../../../../constants/color';
 
 const {width} = Dimensions.get('window');
 
-const CourseCard = ({
+const Benefits = ({
   onPress,
   title,
   subtitle,
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CourseCard;
+export default Benefits;
